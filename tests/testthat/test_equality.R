@@ -18,3 +18,16 @@ test_that("Special case sin(pi) == 0", {
     expect_true(sin(pi) %==% 0)
     expect_true(sin(pi) %===% 0)
 })
+
+test_that("Vectorized equality", {
+    set.seed(1)
+    x <- rnorm(1000)
+    expect_false(all(x == x * (1 + .Machine$double.eps)))
+    expect_true(all(x %==% (x * (1 + .Machine$double.eps))))
+    expect_true(x %===% (x * (1 + .Machine$double.eps)))
+})
+
+test_that("Recycling", {
+    expect_true(all(rep(10.1, 100) %==% 10.1))
+    expect_true(rep(10.1, 100) %===% 10.1)
+})
