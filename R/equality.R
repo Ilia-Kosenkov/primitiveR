@@ -9,14 +9,9 @@ are_equal_f <- function(x, y, eps = 1) {
     eps <- vec_assert_numeric(eps, size = 1L)
     assert(eps >= 0)
 
-    # re-do
-    #vec_cast_common_flatten(x, y) %->% c(x, y)
+    vec_cast_common(x, y, .to = double()) %->% c(x, y)
 
-    vec_assert_numeric(x, arg = as_label(substitute(x)))
-    vec_assert_numeric(y, arg = as_label(substitute(y)))
-
-    # re-do
-    #vctrs::vec_recycle_common(x, y) %->% c(x, y)
+    vec_recycle_common(x, y) %->% c(x, y)
 
     comparator <- function(p, q) {
         if (is_na(p) || is_na(q))
@@ -38,16 +33,11 @@ are_equal_f <- function(x, y, eps = 1) {
         # cannot be 0 at the same time
         if (p_abs == 0 && q_abs == 0)
             abort("Should not happen", "primitiveR_should_not_happen")
-        else if (p_abs == 0)
-            fact <- q_abs
-        else if (q_abs == 0)
-            fact <- p_abs
-        else
-            fact <- min(cc(p_abs, q_abs))
+
+        fact <- sqrt(p_abs ^ 2 + q_abs ^ 2)
 
         return(diff < fact * delta)
     }
-
     map2_lgl(x, y, comparator)
 }
 
@@ -55,7 +45,7 @@ are_equal_f <- function(x, y, eps = 1) {
 `%==%` <- function(x, y) UseMethod("%==%")
 `%==%.double` <- function(x, y) are_equal_f(x, y)
 `%==%.default` <- function(x, y) UseMethod("%==%.default", y)
-`%==%.default.default` <- function(x, y) x == y
+`%==%.default.default` <- function(x, y) vec_equal(x, y)
 `%==%.default.double` <- function(x, y) are_equal_f(x, y)
 
 `%!=%` <- function(x, y)!(x %==% y)
