@@ -1,8 +1,8 @@
 context("Equality tests")
 
 test_that("Special case 0.1 + 0.2 == 0.3", {
-   expect_false((0.1 + 0.2) == 0.3)
-   expect_true((0.1 + 0.2) %==% 0.3)
+    expect_false((0.1 + 0.2) == 0.3)
+    expect_true((0.1 + 0.2) %==% 0.3)
     expect_true((0.1 + 0.2) %===% 0.3)
 
 })

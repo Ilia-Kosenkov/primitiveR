@@ -15,7 +15,7 @@ License: MIT + file LICENSE
 URL: https://github.com/Ilia-Kosenkov/RLibs
 LinkingTo: Rcpp
 Imports:
-	Rcpp,
+    Rcpp,
 	rlang,
 	vctrs,
 	purrr
