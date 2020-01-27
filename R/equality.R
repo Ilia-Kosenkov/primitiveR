@@ -43,10 +43,14 @@ are_equal_f <- function(x, y, eps = 1) {
 
 # Double-dispatched equality
 `%==%` <- function(x, y) UseMethod("%==%")
+
 `%==%.double` <- function(x, y) are_equal_f(x, y)
+`%==%.name` <- function(x, y) is_symbol(y) & x == y
 `%==%.default` <- function(x, y) UseMethod("%==%.default", y)
+
 `%==%.default.default` <- function(x, y) vec_equal(x, y)
 `%==%.default.double` <- function(x, y) are_equal_f(x, y)
+`%==%.default.name` <- function(x, y) is_symbol(x) & x == y
 
 `%!=%` <- function(x, y)!(x %==% y)
 
