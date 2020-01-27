@@ -8,38 +8,26 @@
 are_equal_f <- function(x, y, eps = 1) {
     eps <- vec_assert_numeric(eps, size = 1L)
     assert(eps >= 0)
+    delta <- eps * .Machine$double.eps
 
     vec_cast_common(x, y, .to = double()) %->% c(x, y)
 
-    vec_recycle_common(x, y) %->% c(x, y)
+    vec_recycle_common(x, y, TRUE) %->% c(x, y, mask)
 
-    comparator <- function(p, q) {
-        if (is_na(p) || is_na(q))
-            return(FALSE)
 
-        if (is.infinite(p) || is.infinite(q))
-            return(p == q)
+    na <- mask & (is.na(x) | is.na(y))
+    mask <- mask & (!na)
 
-        if (p == q)
-            return(TRUE)
 
-        p_abs <- abs(p)
-        q_abs <- abs(q)
-        diff <- abs(p - q)
+    infs <- mask & ((is.infinite(x) | is.infinite(y)) & (x == y))
+    mask <- mask & (!infs)
 
-        delta <- eps * .Machine$double.eps
-        # According to IEEE-754 https://en.wikipedia.org/wiki/IEEE_754
-        # -0 and 0 are equal, therefore p_abs and q_abs
-        # cannot be 0 at the same time
-        if (p_abs == 0 && q_abs == 0)
-            abort("Should not happen", "primitiveR_should_not_happen")
 
-        fact <- sqrt(p_abs ^ 2 + q_abs ^ 2)
+    raw_eq <- mask & (abs(x - y) < delta * sqrt(x ^ 2 + y ^ 2))
 
-        return(diff < fact * delta)
-    }
-    map2_lgl(x, y, comparator)
+    return(raw_eq | infs)
 }
+
 
 # Double-dispatched equality
 `%==%` <- function(x, y) UseMethod("%==%")
