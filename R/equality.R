@@ -7,27 +7,10 @@
 #' @export
 are_equal_f <- function(x, y, eps = 1) {
     vec_assert(eps, size = 1L)
-    eps <- vec_cast(double())
-    assert(eps >= 0)
+    vec_cast(eps, double()) -> eps
+    vec_recycle_common(vec_cast(x, double()), vec_cast(y, double())) -> tmp
 
-    delta <- eps * .Machine$double.eps
-
-    vec_cast_common(x, y, .to = double()) %->% c(x, y)
-
-    vec_recycle_common(x, y, TRUE) %->% c(x, y, mask)
-
-
-    na <- mask & (is.na(x) | is.na(y))
-    mask <- mask & (!na)
-
-
-    infs <- mask & ((is.infinite(x) | is.infinite(y)) & (x == y))
-    mask <- mask & (!infs)
-
-
-    raw_eq <- mask & (abs(x - y) < delta * sqrt(x ^ 2 + y ^ 2))
-
-    return(raw_eq | infs)
+    are_equal_f_(tmp[[1]], tmp[[2]], .Machine$double.eps * eps)
 }
 
 
@@ -76,3 +59,8 @@ are_equal_f <- function(x, y, eps = 1) {
 #' @rdname equality
 #' @export
 `%!==%` <- function(x, y) any(x %!=% y)
+
+
+are_equal_f_ <- function(x, y, eps) {
+    .Call("primR_are_equal_f", x, y, eps)
+}

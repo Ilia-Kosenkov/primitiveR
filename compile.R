@@ -4,26 +4,26 @@ if (interactive()) {
     library(vctrs)
     library(purrr)
 
-    #if (!exists("compile_src"))
-        #compile_src <<- function() {
-            #`%>%` <- dplyr::`%>%`
-            #cmds <- vctrs::vec_c(
-                #"rm src/*dll",
-                #"rm src/*o",
-                #"mv src/Makevars.win src/Makevars.win.cache",
-                #"mv src/Makevars.win.dbg src/Makevars.win",
-                #"cd src && RCMD.exe SHLIB *cpp -o **DLL_NAME**.dll",
-                #"mv src/Makevars.win src/Makevars.win.dbg",
-                #"mv src/Makevars.win.cache src/Makevars.win")
+    if (!exists("compile_src"))
+        compile_src <<- function() {
+            `%>%` <- dplyr::`%>%`
+            cmds <- vctrs::vec_c(
+                "rm src/*dll",
+                "rm src/*o",
+                "mv src/Makevars.win src/Makevars.win.cache",
+                "mv src/Makevars.win.dbg src/Makevars.win",
+                "cd src && RCMD.exe SHLIB *cpp -o primitiveR.dll",
+                "mv src/Makevars.win src/Makevars.win.dbg",
+                "mv src/Makevars.win.cache src/Makevars.win")
 
-            #purrr::map_int(cmds, shell)
-            #if (getLoadedDLLs() %>% names %>% stringr::str_detect("**DLL_NAME**") %>% any)
-                #dyn.unload("src/**DLL_NAME**.dll")
+            purrr::map_int(cmds, shell)
+            if (getLoadedDLLs() %>% names %>% stringr::str_detect("primitiveR\\.dll") %>% any)
+                dyn.unload("src/primitiveR.dll")
 
-            #dyn.load("src/**DLL_NAME**.dll", local = FALSE)
-        #}
+            dyn.load("src/primitiveR.dll", local = FALSE)
+        }
 
-    #compile_src()
+    compile_src()
     purrr::walk(fs::dir_ls("R", glob = "*R"), source)
 } else {
 

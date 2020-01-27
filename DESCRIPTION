@@ -13,7 +13,9 @@ LazyData: true
 ByteCompile: true
 License: MIT + file LICENSE
 URL: https://github.com/Ilia-Kosenkov/RLibs
+LinkingTo: Rcpp
 Imports:
+	Rcpp,
 	rlang,
 	vctrs,
 	purrr

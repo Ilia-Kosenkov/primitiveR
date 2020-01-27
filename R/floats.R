@@ -16,7 +16,6 @@ are_same_all <- function(x, eps = 1) {
     all(are_equal_f(vec_slice(x, 1L), vec_slice(x, 2L:len(x)), eps = eps))
 }
 
-
 #' @title unique_which_f
 #'
 #' @param x Vector to test.

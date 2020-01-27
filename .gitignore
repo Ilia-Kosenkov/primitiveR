@@ -36,3 +36,7 @@ vignettes/*.pdf
 *.knit.md
 
 **/.vs/*
+*.o
+*.dbg
+*.dll
+**/Implementation/*
