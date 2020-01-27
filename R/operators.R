@@ -34,14 +34,39 @@
 }
 
 
+#' @title Within
+#' @rdname within
+#' @param lhs Numeric vector to test
+#' @param rhs A pair of boundaries
+#'
+#' @return Logical vector, indicating the position of items within the range
+#' @export
 `%win%` <- function(lhs, rhs) {
     vec_assert(rhs, size = 2L)
     vec_cast_common(lhs, rhs) %->% c(lhs, rhs)
     lhs > rhs[1] & lhs < rhs[2]
 }
 
+#' @rdname within
+#' @export
 `%wini%` <- function(lhs, rhs) {
     vec_assert(rhs, size = 2L)
     vec_cast_common(lhs, rhs) %->% c(lhs, rhs)
     lhs >= rhs[1] & lhs <= rhs[2]
+}
+
+#' @rdname within
+#' @export
+`%!win%` <- function(lhs, rhs) {
+    vec_assert(rhs, size = 2L)
+    vec_cast_common(lhs, rhs) %->% c(lhs, rhs)
+    lhs <= rhs[1] | lhs >= rhs[2]
+}
+
+#' @rdname within
+#' @export
+`%!wini%` <- function(lhs, rhs) {
+    vec_assert(rhs, size = 2L)
+    vec_cast_common(lhs, rhs) %->% c(lhs, rhs)
+    lhs < rhs[1] | lhs > rhs[2]
 }
