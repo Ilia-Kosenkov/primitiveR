@@ -68,6 +68,8 @@ distinct_which_f <- function(x, y, eps = 1L) {
 #' @return List with two items, \code{x} and \code{y}, which contain values that are not present in another collection
 #' @export
 distinct_f <- function(x, y, eps = 1L) {
+    id_x <- NULL
+    id_y <- NULL
     c(id_x, id_y) %<-% distinct_which_f(x, y, eps)
     list_of(x = vec_slice(x, id_x), y = vec_slice(y, id_y))
 }

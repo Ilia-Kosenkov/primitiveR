@@ -7,7 +7,7 @@
 #' @return A composed function
 #'
 #' @examples
-#' (~.x ^ 2) %>>% (~.x + 5)
+#' (~.x ^ 2) %>>% (~.x + 5) %>>% sqrt
 #' @export
 `%>>%` <- function(x, y) {
     enquo(x) -> q_x
@@ -20,8 +20,7 @@
             lhs <- append(lhs, list(ex[[3]]))
             ex <- ex[[2]]
         }
-        lhs <- append(lhs, ex) %>%
-            map(as_quosure, env)
+        lhs <- map(append(lhs, ex), as_quosure, env)
 
 
         return(eval_tidy(quo(compose(y, !!!lhs, .dir = "backward"))))
@@ -42,8 +41,7 @@
             lhs <- append(lhs, list(ex[[3]]))
             ex <- ex[[2]]
         }
-        lhs <- append(lhs, ex) %>%
-            map(as_quosure, env)
+        lhs <- map(append(lhs, ex), as_quosure, env)
 
         return(eval_tidy(quo(compose(y, !!!lhs, .dir = "forward"))))
     }

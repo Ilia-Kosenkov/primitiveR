@@ -1,3 +1,11 @@
+#' @title Assert
+#'
+#' @param expr Expression to test. Should evaluate to logical.
+#' @param msg Optional message to include in the error.
+#' @param subclass Additional error subclasses.
+#'
+#' @return Invisibly \code{TRUE} if successful.
+#' @export
 assert <- function(expr, msg = NULL, subclass = NULL) {
     q <- enquo(expr)
     if (!expr) {
@@ -26,4 +34,6 @@ assert <- function(expr, msg = NULL, subclass = NULL) {
 
         abort(msg, class)
     }
+
+    invisible(TRUE)
 }
