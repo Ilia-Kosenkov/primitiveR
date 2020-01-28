@@ -21,10 +21,10 @@ test_that("Special case sin(pi) == 0", {
 
 test_that("Vectorized equality", {
     set.seed(1)
-    x <- rnorm(1000)
-    expect_false(all(x == x * (1 + .Machine$double.eps)))
-    expect_true(all(x %==% (x * (1 + .Machine$double.eps))))
-    expect_true(x %===% (x * (1 + .Machine$double.eps)))
+    x <- runif(1000L, 1e-15, 1)
+    expect_false(all(x == (x + 0.9 * 10 ^ floor(log10(x)) * .Machine$double.eps)))
+    expect_true(all(x %==% (x + 0.9 * 10 ^ floor(log10(x)) * .Machine$double.eps)))
+    expect_true(x %===% (x + 0.9 * 10 ^ floor(log10(x)) * .Machine$double.eps))
 })
 
 test_that("Recycling", {
@@ -36,4 +36,11 @@ test_that("Special cases 0 == 0", {
     expect_true(0.0 %===% 0.0)
     expect_false(0.0 %===% .Machine$double.eps)
     expect_true((0.9 * .Machine$double.eps) %===% 0.0)
+})
+
+test_that("Special cases 1000 == 1000", {
+    expect_true(1000.0 %===% 1000.0)
+    expect_false(1000.0 %===% (1000 + 1e3 * .Machine$double.eps))
+    expect_true((5e2 * .Machine$double.eps + 1000) %===% 1000.0)
+    expect_false((5e2 * .Machine$double.eps + 1000) == 1000.0)
 })

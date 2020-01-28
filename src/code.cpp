@@ -22,7 +22,7 @@ SEXP primR_are_equal_f(SEXP x, SEXP y, SEXP eps) {
 			else if (y_abs == 0.0)
 				result[i] = x_abs < eps_val;
 			else
-				result[i] = abs(x_vals[i] - y_vals[i]) < eps_val * std::max(x_abs, y_abs);
+				result[i] = fabs(x_vals[i] - y_vals[i]) < eps_val * std::max(x_abs, y_abs);
 		}
 	}
 
