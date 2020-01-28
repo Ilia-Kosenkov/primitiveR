@@ -31,3 +31,9 @@ test_that("Recycling", {
     expect_true(all(rep(10.1, 100) %==% 10.1))
     expect_true(rep(10.1, 100) %===% 10.1)
 })
+
+test_that("Special cases 0 == 0", {
+    expect_true(0.0 %===% 0.0)
+    expect_false(0.0 %===% .Machine$double.eps)
+    expect_true((0.9 * .Machine$double.eps) %===% 0.0)
+})

@@ -14,8 +14,8 @@ SEXP primR_are_equal_f(SEXP x, SEXP y, SEXP eps) {
 			result[i] = x_vals[i] == y_vals[i];
 		else 
 		{
-			const auto x_abs = abs(x_vals[i]);
-			const auto y_abs = abs(y_vals[i]);
+			const auto x_abs = fabs(x_vals[i]);
+			const auto y_abs = fabs(y_vals[i]);
 
 			if (x_abs == 0.0)
 				result[i] = y_abs < eps_val;
