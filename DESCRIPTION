@@ -1,6 +1,6 @@
 Package: primitiveR
 Title: R primitive tools
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Ilia",
            family = "Kosenkov",
@@ -18,7 +18,8 @@ Imports:
     Rcpp,
 	rlang,
 	vctrs,
-	purrr
+	purrr,
+	glue
 Suggests:
     testthat,
 	magrittr
