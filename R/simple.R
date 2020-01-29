@@ -35,3 +35,36 @@ fct_get <- function(f) {
     assert(is.factor(f))
     levels(f)[f]
 }
+
+
+#' @title As converters
+#' @rdname as_conv
+#' @param x Collection to convert.
+#' @param ... Unused args, for compatibility.
+#' @param .fb_ptype Fallback type.
+#' @return \code{list_of}/\code{vector} as a result of conversion.
+#' @export
+as_list_of.default <- function(x, ..., .fb_ptype = NULL)
+    list_of(!!!x, .ptype = .fb_ptype)
+
+#' @rdname as_conv
+#' @export
+as_vec <- function(x, ...)
+    vec_c(!!!x)
+
+#' @title Vector accessor
+#' @param x Vector to slice.
+#' @param i Indexes.
+#' @description Temporary solution.
+#' @return \code{list_of<item_ptype>}.
+#' @export
+vec_rip <- function(x, i) {
+    i <- vec_cast(i, integer())
+
+    if (is.data.frame(x))
+        result <- vec_chop(x, as_list_of(i))
+    else
+        result <- vec_slice(x, i)
+
+    as_list_of(result)
+}
