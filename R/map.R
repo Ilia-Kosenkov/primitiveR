@@ -23,31 +23,51 @@ vec_as_mapper2 <- function(.f, ...) {
         }
 }
 
+#' @title Mappers
+#' @rdname mappers
+#'
+#' @param .x,.y Vectors to iterate over.
+#' @param .p Predicate function.
+#' @param .f Mapper function.
+#' @param .else Alternative mapper for \code{vmap_if}.
+#' @param .at Location to map at.
+#' @param ... Additional paramters passed to mappers
+#' @description Performs \code{vctrs} - compatibel mapping.
+#' Requries strongly typed input and output. By default returns \code{vctrs::list_of}.
+#' \code{*_pt} version performs conversion to the common \code{ptype}.
+#' @return Either \code{list_of} or vector of common \code{ptype}.
+#' @export
 vmap <- function(.x, .f, ...) {
     .f <- vec_as_mapper(.f, ...)(.x)
 
     set_names(as_list_of(map(vec_seq_along(.x), .f)), names(.x))
 }
 
+#' @rdname mappers
+#' @export
 vmap_pt <- function(.x, .f, ...) {
     .f <- vec_as_mapper(.f, ...)(.x)
     vec_c(!!!map(vec_seq_along(.x), .f))
 }
 
-
+#' @rdname mappers
+#' @export
 vmap2 <- function(.x, .y, .f, ...) {
     vec_recycle_common(.x, .y) %->% c(.x, .y)
     .f <- vec_as_mapper2(.f, ...)(.x, .y)
     set_names(as_list_of(map(vec_seq_along(.x), .f)), names(.x))
 }
 
+#' @rdname mappers
+#' @export
 vmap2_pt <- function(.x, .y, .f, ...) {
     vec_recycle_common(.x, .y) %->% c(.x, .y)
     .f <- vec_as_mapper2(.f, ...)(.x, .y)
     set_names(vec_c(!!!map(vec_seq_along(.x), .f)), names(.x))
 }
 
-
+#' @rdname mappers
+#' @export
 vmap_if <- function(.x, .p, .f, ..., .else = NULL) {
     sel <- vec_cast(vmap_pt(.x, .p), logical())
     out <- vec_init(list(), vec_size(.x))
@@ -61,6 +81,8 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL) {
     return(set_names(as_list_of(out), names(.x)))
 }
 
+#' @rdname mappers
+#' @export
 vmap_at <- function(.x, .at, .f, ...) {
     loc <- vec_as_location(.at, vec_size(.x), names(.x))
     inv <- vec_as_location_inv(.at, vec_size(.x), names(.x))
