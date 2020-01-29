@@ -25,7 +25,7 @@
 
         return(eval_tidy(quo(compose(y, !!!lhs, .dir = "backward"))))
     }
-    return(compose(x, y, .dir = "backward"))
+    return(compose(y, x, .dir = "backward"))
 }
 
 #' @rdname composer
@@ -45,5 +45,5 @@
 
         return(eval_tidy(quo(compose(y, !!!lhs, .dir = "forward"))))
     }
-    return(compose(x, y, .dir = "forward"))
+    return(compose(y, x, .dir = "forward"))
 }
