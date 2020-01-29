@@ -9,17 +9,17 @@
 \alias{vmap_at}
 \title{Mappers}
 \usage{
-vmap(.x, .f, ...)
+vmap(.x, .f, ..., .fb_ptype = NULL)
 
-vmap_pt(.x, .f, ...)
+vmap_pt(.x, .f, ..., .fb_ptype = NULL)
 
-vmap2(.x, .y, .f, ...)
+vmap2(.x, .y, .f, ..., .fb_ptype = NULL)
 
-vmap2_pt(.x, .y, .f, ...)
+vmap2_pt(.x, .y, .f, ..., .fb_ptype = NULL)
 
-vmap_if(.x, .p, .f, ..., .else = NULL)
+vmap_if(.x, .p, .f, ..., .else = NULL, .fb_ptype = NULL)
 
-vmap_at(.x, .at, .f, ...)
+vmap_at(.x, .at, .f, ..., .fb_ptype = NULL)
 }
 \arguments{
 \item{.x, .y}{Vectors to iterate over.}
@@ -27,6 +27,8 @@ vmap_at(.x, .at, .f, ...)
 \item{.f}{Mapper function.}
 
 \item{...}{Additional paramters passed to mappers}
+
+\item{.fb_ptype}{Fallback \code{ptype} for type-stability of empty collections.}
 
 \item{.p}{Predicate function.}
 
