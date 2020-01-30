@@ -13,11 +13,6 @@ are_equal_f <- function(x, y, eps = 1) {
     are_equal_f_(tmp[[1]], tmp[[2]], .Machine$double.eps * eps)
 }
 
-replace_na <- function(x, val = FALSE) {
-    x[is.na(x)] <- val
-    x
-}
-
 
 # Double-dispatched equality
 
@@ -32,10 +27,10 @@ replace_na <- function(x, val = FALSE) {
 
 #' @rdname equality
 #' @export
-`%==%.double` <- function(x, y) replace_na(are_equal_f(x, y))
+`%==%.double` <- function(x, y) (are_equal_f(x, y)) %|% FALSE
 #' @rdname equality
 #' @export
-`%==%.name` <- function(x, y) replace_na(is_symbol(y) & x == y)
+`%==%.name` <- function(x, y) (is_symbol(y) & x == y) %|% FALSE
 #' @rdname equality
 #' @method %==% default
 #' @export
@@ -44,15 +39,15 @@ replace_na <- function(x, val = FALSE) {
 #' @rdname equality
 #' @method %==%.default default
 #' @export
-`%==%.default.default` <- function(x, y) replace_na(vec_equal(x, y))
+`%==%.default.default` <- function(x, y) (vec_equal(x, y)) %|% FALSE
 #' @rdname equality
 #' @method %==%.default double
 #' @export
-`%==%.default.double` <- function(x, y) replace_na(are_equal_f(x, y))
+`%==%.default.double` <- function(x, y) (are_equal_f(x, y)) %|% FALSE
 #' @rdname equality
 #' @method %==%.default name
 #' @export
-`%==%.default.name` <- function(x, y) replace_na(is_symbol(x) & x == y)
+`%==%.default.name` <- function(x, y) (is_symbol(x) & x == y) %|% FALSE
 
 #' @rdname equality
 #' @export

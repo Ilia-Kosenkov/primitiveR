@@ -44,3 +44,9 @@ test_that("Special cases 1000 == 1000", {
     expect_true((5e2 * .Machine$double.eps + 1000) %===% 1000.0)
     expect_false((5e2 * .Machine$double.eps + 1000) == 1000.0)
 })
+
+test_that("`NA` equality", {
+    expect_false(NA %==% 5)
+    expect_false(NA %==% NA)
+    expect_false(5 %==% NA)
+})
