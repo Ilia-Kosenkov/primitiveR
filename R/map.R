@@ -21,7 +21,7 @@ vmap <- function(.x, .f, ..., .fb_ptype = NULL) {
     }
 
     as_list_of(map(
-        vec_rip(.x, vec_seq_along(.x)),
+        vec_rips(.x, vec_seq_along(.x)),
         .f, ...))
 }
 
@@ -34,7 +34,7 @@ vmap_pt <- function(.x, .f, ..., .fb_ptype = NULL) {
         return(vec_init(vec_ptype(.fb_ptype), 0L))
     }
     as_vec(map(
-        vec_rip(.x, vec_seq_along(.x)),
+        vec_rips(.x, vec_seq_along(.x)),
         .f, ...))
 }
 
@@ -48,8 +48,8 @@ vmap2 <- function(.x, .y, .f, ..., .fb_ptype = NULL) {
         return(list_of(.ptype = vec_ptype(.fb_ptype)))
     }
     as_list_of(map2(
-         vec_rip(.x, vec_seq_along(.x)),
-         vec_rip(.y, vec_seq_along(.y)),
+         vec_rips(.x, vec_seq_along(.x)),
+         vec_rips(.y, vec_seq_along(.y)),
          .f, ...))
 }
 
@@ -63,8 +63,8 @@ vmap2_pt <- function(.x, .y, .f, ..., .fb_ptype = NULL) {
         return(vec_init(vec_ptype(.fb_ptype), 0L))
     }
     as_vec(map2(
-         vec_rip(.x, vec_seq_along(.x)),
-         vec_rip(.y, vec_seq_along(.y)),
+         vec_rips(.x, vec_seq_along(.x)),
+         vec_rips(.y, vec_seq_along(.y)),
          .f, ...))
 }
 
@@ -78,7 +78,7 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL, .fb_ptype = NULL) {
     }
 
     as_list_of(map_if(
-        vec_rip(.x, vec_seq_along(.x)),
+        vec_rips(.x, vec_seq_along(.x)),
         vec_cast(vmap_pt(.x, .p), logical()),
         .f,..., .else = .else))
 }
@@ -98,7 +98,7 @@ vmap_at <- function(.x, .at, .f, ..., .fb_ptype = NULL) {
         return(list_of(.ptype = vec_ptype(.fb_ptype)))
     }
 
-    seq <- vec_rip(.x, vec_seq_along(.x))
+    seq <- vec_rips(.x, vec_seq_along(.x))
     nms <- names(seq)
     as_list_of(
         map_at(

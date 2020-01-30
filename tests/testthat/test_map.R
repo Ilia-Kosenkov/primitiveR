@@ -1,6 +1,6 @@
 context("{vctrs}-compatible mappers")
 
-test_that("map_* vs vmap_pt", {
+test_that("`map_*` vs `vmap_pt`", {
     set.seed(1)
 
     x <- rnorm(1000)
@@ -8,7 +8,7 @@ test_that("map_* vs vmap_pt", {
     expect_true(map_dbl(x, ~.x ^ 2) %===% vmap_pt(x, ~.x ^ 2))
 })
 
-test_that("map_vs vmap", {
+test_that("`map` vs `vmap`", {
     set.seed(1)
 
     x <- rnorm(1000)
@@ -17,7 +17,7 @@ test_that("map_vs vmap", {
 })
 
 
-test_that("map_if vmap_if", {
+test_that("`map_if` vs `vmap_if`", {
     set.seed(1)
 
     x <- rnorm(1000)
@@ -25,7 +25,7 @@ test_that("map_if vmap_if", {
     expect_true(as_list_of(map_if(x, ~ .x > 0, ~ .x ^ 2)) %===% vmap_if(x, ~ .x > 0, ~ .x ^ 2))
 })
 
-test_that("map_at vmap_at", {
+test_that("`map_at` vs `vmap_at`", {
     set.seed(1)
 
     x <- rnorm(1000)
@@ -33,4 +33,8 @@ test_that("map_at vmap_at", {
 
     expect_true(
         as_list_of(map_at(x, at, ~ .x ^ 2)) %===% vmap_at(x, at, ~ .x ^ 2))
+})
+
+test_that("`vmap` over `data.frame`", {
+   expect_true(pmap_dbl(mtcars, sum) %===% vmap_pt(mtcars, sum))
 })

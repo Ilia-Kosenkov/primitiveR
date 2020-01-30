@@ -53,18 +53,54 @@ as_vec <- function(x, ...)
     vec_c(!!!x)
 
 #' @title Vector accessor
+#' @rdname vec_rips
 #' @param x Vector to slice.
 #' @param i Indexes.
 #' @description Temporary solution.
 #' @return \code{list_of<item_ptype>}.
 #' @export
-vec_rip <- function(x, i) {
-    i <- vec_cast(i, integer())
+vec_rips <- function(x, i) {
+    nms <- vec_names(x)
 
-    if (is.data.frame(x))
-        result <- vec_chop(x, as_list_of(i))
+    i <- vec_as_location(i, vec_size(x), vec_names(x))
+
+
+    if (is.data.frame(x)) {
+        if (!is_null(nms))
+            nms <- vec_slice(nms, i)
+        result <- as_list_of(set_names(vec_chop(x, as_list_of(i)), nms))
+    }
     else
-        result <- vec_slice(x, i)
+        result <- as_list_of(vec_slice(x, i))
 
-    as_list_of(result)
+    return(result)
 }
+
+#' @rdname vec_rips
+#' @export
+vec_rip <- function(x, i) {
+    i <- vec_as_location(i, vec_size(x), vec_names(x))
+    vec_assert(i, integer(), 1L)
+
+    result <- vec_slice(x, i)
+    if (is_bare_list(x) || is_list_of(x))
+        result <- as_vec(result)
+
+    return(result)
+}
+
+#' @title Vector names
+#' @rdname vec_names
+#' @param x Vector to get names from.
+#' @param ... Placeholder parameters.
+#' @return Names of the vector.
+#' @export
+vec_names <- function(x, ...) UseMethod("vec_names")
+#' @rdname vec_names
+#' @method vec_names data.frame
+#' @export
+vec_names.data.frame <- function(x, ...) rownames(x)
+#' @rdname vec_names
+#' @method vec_names default
+#' @export
+vec_names.default <- function(x, ...) names(x)
