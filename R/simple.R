@@ -44,8 +44,9 @@ fct_get <- function(f) {
 #' @param .fb_ptype Fallback type.
 #' @return \code{list_of}/\code{vector} as a result of conversion.
 #' @export
-as_list_of.default <- function(x, ..., .fb_ptype = NULL)
-    list_of(!!!x, .ptype = .fb_ptype)
+as_list_of.default <- function(x, ..., .fb_ptype = NULL) {
+    as_list_of(map(vec_seq_along(x), vec_rip, x = x), .ptype = .fb_ptype)
+}
 
 #' @rdname as_conv
 #' @export
