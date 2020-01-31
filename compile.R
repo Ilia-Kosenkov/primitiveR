@@ -1,9 +1,8 @@
 if (interactive()) {
     # Library imports for debug go here
+    library(purrr)
     library(rlang)
     library(vctrs)
-    library(purrr)
-
     if (!exists("compile_src"))
         compile_src <<- function() {
             `%>%` <- dplyr::`%>%`
@@ -17,7 +16,7 @@ if (interactive()) {
                 "mv src/Makevars.win.cache src/Makevars.win")
 
             purrr::map_int(cmds, shell)
-            if (getLoadedDLLs() %>% names %>% stringr::str_detect("primitiveR\\.dll") %>% any)
+            if (getLoadedDLLs() %>% names %>% stringr::str_detect("primitiveR") %>% any)
                 dyn.unload("src/primitiveR.dll")
 
             dyn.load("src/primitiveR.dll", local = FALSE)

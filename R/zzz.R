@@ -1,6 +1,6 @@
 #' @useDynLib primitiveR
 #' @import     Rcpp
-#' @importFrom rlang    enquo quo_get_env quo_get_expr sym abort warn quo exec
+#' @importFrom rlang    enquo quo_get_env quo_get_expr sym abort warn quo exec %@%
 #' @importFrom rlang    is_null as_label is_na !!! eval_tidy as_quosure is_symbol
 #' @importFrom rlang    quo_text parse_expr is_empty set_names is_bare_list %|%
 #'

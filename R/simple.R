@@ -105,3 +105,23 @@ vec_names.data.frame <- function(x, ...) rownames(x)
 #' @method vec_names default
 #' @export
 vec_names.default <- function(x, ...) names(x)
+
+#' @title Item ptype
+#'
+#' @param x Container to test.
+#'
+#' @return \code{ptype} of the container.
+#' @export
+vec_item_ptype <- function(x) {
+    # For scalars (like vectors and also data.frames/tibbles),
+    # item_ptype == ptype;
+    # For lists/list_ofs, which act as generic containers,
+    # item_ptype != ptype
+
+    if (is_bare_list(x))
+        return(vec_ptype_common(!!!x))
+    if (is_list_of(x))
+        return(vec_ptype(x %@% "ptype"))
+
+    return(vec_ptype(x))
+}
