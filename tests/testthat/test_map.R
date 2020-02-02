@@ -38,3 +38,7 @@ test_that("`map_at` vs `vmap_at`", {
 test_that("`vmap` over `data.frame`", {
    expect_true(pmap_dbl(mtcars, sum) %===% vmap_pt(mtcars, sum))
 })
+
+test_that("`lin` behaviour", {
+    expect_true(lin(-10:10, cc(0, 1), cc(0, 2)) %===% (2 * (-10 : 10)))
+})

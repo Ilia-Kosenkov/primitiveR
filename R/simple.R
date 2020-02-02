@@ -125,3 +125,27 @@ vec_item_ptype <- function(x) {
 
     return(vec_ptype(x))
 }
+
+
+#' @title lin
+#' @param x Where to interpolate.
+#' @param x0 Arguments (size 2).
+#' @param y0 Values (size 2).
+#' @return Interpolated value between two provided.
+#' @export
+lin <- function(x, x0, y0) {
+
+    data <- vec_cast_common(x0, y0)
+    vctrs::vec_recycle_common(!!!data, .size = 2L) %->% c(x0, y0)
+
+    dx <- diff(x0)
+    dy <- diff(y0)
+    sz <- len(x)
+    if (sz %===% 0L)
+        return(x)
+    else if (sz %===% 1L)
+        (x - x0[1]) * dy / dx + y0[1]
+    else {
+        vmap_pt(x, ~ (.x - x0[1]) * dy / dx + y0[1])
+    }
+}
