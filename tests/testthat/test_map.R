@@ -42,3 +42,15 @@ test_that("`vmap` over `data.frame`", {
 test_that("`lin` behaviour", {
     expect_true(lin(-10:10, cc(0, 1), cc(0, 2)) %===% (2 * (-10 : 10)))
 })
+
+test_that("`vkeep` & `vdiscard` work similarly", {
+    expect_true(vkeep(mtcars, ~.x$hp > 200) %===% vdiscard(mtcars, ~.x$hp <= 200))
+})
+
+test_that("`vkeep` works as `keep`", {
+    expect_true(vkeep(mtcars, ~ .x$hp > 200) %===% keep(as_list_of(mtcars), ~.x$hp > 200))
+})
+
+test_that("`vdiscard` works as `discard`", {
+    expect_true(vdiscard(mtcars, ~ .x$hp > 200) %===% discard(as_list_of(mtcars), ~ .x$hp > 200))
+})

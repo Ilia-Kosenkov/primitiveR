@@ -7,6 +7,8 @@
 \alias{vmap2_pt}
 \alias{vmap_if}
 \alias{vmap_at}
+\alias{vkeep}
+\alias{vdiscard}
 \title{Mappers}
 \usage{
 vmap(.x, .f, ..., .fb_ptype = NULL)
@@ -20,6 +22,10 @@ vmap2_pt(.x, .y, .f, ..., .fb_ptype = NULL)
 vmap_if(.x, .p, .f, ..., .else = NULL, .fb_ptype = NULL)
 
 vmap_at(.x, .at, .f, ..., .fb_ptype = NULL)
+
+vkeep(.x, .p, ..., .fb_ptype = NULL)
+
+vdiscard(.x, .p, ..., .fb_ptype = NULL)
 }
 \arguments{
 \item{.x, .y}{Vectors to iterate over.}
