@@ -6,94 +6,94 @@
 #' @param .f Mapper function.
 #' @param .else Alternative mapper for \code{vmap_if}.
 #' @param .at Location to map at.
-#' @param .fb_ptype Fallback \code{ptype} for type-stability of empty collections.
+#' @param .ptype Fallback \code{ptype} for type-stability of empty collections.
 #' @param ... Additional paramters passed to mappers
 #' @description Performs \code{vctrs} - compatibel mapping.
 #' Requries strongly typed input and output. By default returns \code{vctrs::list_of}.
 #' \code{*_pt} version performs conversion to the common \code{ptype}.
 #' @return Either \code{list_of} or vector of common \code{ptype}.
 #' @export
-vmap <- function(.x, .f, ..., .fb_ptype = NULL) {
+vmap <- function(.x, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.x)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("Input sequence is empty.", "primitiveR_invalid_arg")
-        return(list_of(.ptype = vec_ptype(.fb_ptype)))
+        return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
     result <- as_list_of(map(
         vec_rips(.x, vec_seq_along(.x)),
         .f, ...))
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, list_of(.ptype = .ptype))
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vmap_pt <- function(.x, .f, ..., .fb_ptype = NULL) {
+vmap_pt <- function(.x, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.x)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("Input sequence is empty.", "primitiveR_invalid_arg")
-        return(vec_init(vec_ptype(.fb_ptype), 0L))
+        return(vec_init(vec_ptype(.ptype), 0L))
     }
     result <- as_vec(map(
         vec_rips(.x, vec_seq_along(.x)),
         .f, ...))
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, .ptype)
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vmap2 <- function(.x, .y, .f, ..., .fb_ptype = NULL) {
+vmap2 <- function(.x, .y, .f, ..., .ptype = NULL) {
     vec_recycle_common(.x, .y) %->% c(.x, .y)
     if (vec_is_empty(.x)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("One of the input sequences is empty.", "primitiveR_invalid_arg")
-        return(list_of(.ptype = vec_ptype(.fb_ptype)))
+        return(list_of(.ptype = vec_ptype(.ptype)))
     }
     result <- as_list_of(map2(
          vec_rips(.x, vec_seq_along(.x)),
          vec_rips(.y, vec_seq_along(.y)),
          .f, ...))
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, list_of(.ptype = .ptype))
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vmap2_pt <- function(.x, .y, .f, ..., .fb_ptype = NULL) {
+vmap2_pt <- function(.x, .y, .f, ..., .ptype = NULL) {
     vec_recycle_common(.x, .y) %->% c(.x, .y)
     if (vec_is_empty(.x)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("One of the input sequences is empty.", "primitiveR_invalid_arg")
-        return(vec_init(vec_ptype(.fb_ptype), 0L))
+        return(vec_init(vec_ptype(.ptype), 0L))
     }
     result <- as_vec(map2(
          vec_rips(.x, vec_seq_along(.x)),
          vec_rips(.y, vec_seq_along(.y)),
          .f, ...))
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, .ptype)
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vmap_if <- function(.x, .p, .f, ..., .else = NULL, .fb_ptype = NULL) {
+vmap_if <- function(.x, .p, .f, ..., .else = NULL, .ptype = NULL) {
     if (vec_is_empty(.x)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("Input sequence is empty.", "primitiveR_invalid_arg")
-        return(list_of(.ptype = vec_ptype(.fb_ptype)))
+        return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
     result <- as_list_of(map_if(
@@ -101,25 +101,25 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL, .fb_ptype = NULL) {
         vmap_pt(.x, .p, logical()),
         .f, ..., .else = .else))
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, list_of(.ptype = .ptype))
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vmap_at <- function(.x, .at, .f, ..., .fb_ptype = NULL) {
+vmap_at <- function(.x, .at, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.at)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("Position sequence is empty.", "primitiveR_invalid_arg")
-        return(list_of(!!!.x, .ptype = vec_ptype(.fb_ptype)))
+        return(list_of(!!!.x, .ptype = vec_ptype(.ptype)))
     }
 
     if (vec_is_empty(.x)) {
-        if (is_null(.fb_ptype))
+        if (is_null(.ptype))
             abort("Input sequence is empty.", "primitiveR_invalid_arg")
-        return(list_of(.ptype = vec_ptype(.fb_ptype)))
+        return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
     seq <- vec_rips(.x, vec_seq_along(.x))
@@ -130,36 +130,44 @@ vmap_at <- function(.x, .at, .f, ..., .fb_ptype = NULL) {
             vec_as_location(.at, vec_size(.x), nms),
             .f, ...))
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, list_of(.ptype = .ptype))
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vkeep <- function(.x, .p, ..., .fb_ptype = NULL) {
+vkeep <- function(.x, .p, ..., .ptype = NULL) {
     .p <- as_mapper(.p, ...)
     sel <- vmap_pt(.x, .p, logical())
     loc <- vec_as_location(sel, vec_size(.x))
     result <- vec_rips(.x, loc)
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, list_of(.ptype = .ptype))
 
     return(result)
 }
 
 #' @rdname mappers
 #' @export
-vdiscard <- function(.x, .p, ..., .fb_ptype = NULL) {
+vdiscard <- function(.x, .p, ..., .ptype = NULL) {
     .p <- as_mapper(.p, ...)
     sel <- vmap_pt(.x, .p, logical())
     loc <- vec_as_location(!sel, vec_size(.x))
     result <- vec_rips(.x, loc)
 
-    if (!is_null(.fb_ptype))
-        result <- vec_cast(result, .fb_ptype)
+    if (!is_null(.ptype))
+        result <- vec_cast(result, list_of(.ptype = .ptype))
 
     return(result)
+}
+
+vimap <- function(.x, .f, ..., .ptype = NULL) {
+    vmap2(.x, vec_names(.x) %||% vec_seq_along(.x), .f, ..., .ptype = .ptype)
+}
+
+vimap_pt <- function(.x, .f, ..., .ptype = NULL) {
+    vmap2_pt(.x, vec_names(.x) %||% vec_seq_along(.x), .f, ..., .ptype = .ptype)
 }

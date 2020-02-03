@@ -54,3 +54,11 @@ test_that("`vkeep` works as `keep`", {
 test_that("`vdiscard` works as `discard`", {
     expect_true(vdiscard(mtcars, ~ .x$hp > 200) %===% discard(as_list_of(mtcars), ~ .x$hp > 200))
 })
+
+test_that("`vimap` vs `imap`", {
+    expect_true(vimap(set_names(LETTERS, letters), vec_c) %===% as_list_of(imap(set_names(LETTERS, letters), vec_c)))
+})
+
+test_that("`vimap_pt` vs `imap_chr`", {
+    expect_true(vimap_pt(set_names(LETTERS, letters), paste0) %===% imap_chr(set_names(LETTERS, letters), paste0))
+})

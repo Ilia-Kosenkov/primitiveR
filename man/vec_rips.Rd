@@ -7,12 +7,14 @@
 \usage{
 vec_rips(x, i)
 
-vec_rip(x, i)
+vec_rip(x, i, strip_names = FALSE)
 }
 \arguments{
 \item{x}{Vector to slice.}
 
 \item{i}{Indexes.}
+
+\item{strip_names}{Whether to strip names.}
 }
 \value{
 \code{list_of<item_ptype>}.

@@ -2,10 +2,13 @@
 % Please edit documentation in R/simple.R
 \name{as_list_of.default}
 \alias{as_list_of.default}
+\alias{as_list_of.data.frame}
 \alias{as_vec}
 \title{As converters}
 \usage{
-\method{as_list_of}{default}(x, ..., .fb_ptype = NULL)
+\method{as_list_of}{default}(x, ..., .ptype = NULL)
+
+\method{as_list_of}{data.frame}(x, ..., .ptype = NULL)
 
 as_vec(x, ...)
 }
@@ -14,11 +17,15 @@ as_vec(x, ...)
 
 \item{...}{Unused args, for compatibility.}
 
-\item{.fb_ptype}{Fallback type.}
+\item{.ptype}{Fallback type.}
 }
 \value{
 \code{list_of}/\code{vector} as a result of conversion.
+
+\code{list_of}/\code{vector} as a result of conversion.
 }
 \description{
+As converters
+
 As converters
 }

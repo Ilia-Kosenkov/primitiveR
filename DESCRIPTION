@@ -1,6 +1,6 @@
 Package: primitiveR
 Title: R primitive tools
-Version: 0.0.13
+Version: 0.0.14
 Authors@R: 
     person(given = "Ilia",
            family = "Kosenkov",

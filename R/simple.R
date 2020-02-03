@@ -41,11 +41,31 @@ fct_get <- function(f) {
 #' @rdname as_conv
 #' @param x Collection to convert.
 #' @param ... Unused args, for compatibility.
-#' @param .fb_ptype Fallback type.
+#' @param .ptype Fallback type.
 #' @return \code{list_of}/\code{vector} as a result of conversion.
 #' @export
-as_list_of.default <- function(x, ..., .fb_ptype = NULL) {
-    as_list_of(map(vec_seq_along(x), vec_rip, x = x), .ptype = .fb_ptype)
+as_list_of.default <- function(x, ..., .ptype = NULL) {
+    as_list_of(
+        set_names(
+            map(vec_seq_along(x), vec_rip, x = x, strip_names = TRUE),
+            vec_names(x)),
+        .ptype = .ptype)
+}
+
+#' @title As converters
+#' @rdname as_conv
+#' @param x Collection to convert.
+#' @param ... Unused args, for compatibility.
+#' @param .ptype Fallback type.
+#' @method as_list_of data.frame
+#' @return \code{list_of}/\code{vector} as a result of conversion.
+#' @export
+as_list_of.data.frame <- function(x, ..., .ptype = NULL) {
+    as_list_of(
+        set_names(
+            map(vec_seq_along(x), vec_rip, x = x, strip_names = FALSE),
+            vec_names(x)),
+        .ptype = .ptype)
 }
 
 #' @rdname as_conv
@@ -57,6 +77,7 @@ as_vec <- function(x, ...)
 #' @rdname vec_rips
 #' @param x Vector to slice.
 #' @param i Indexes.
+#' @param strip_names Whether to strip names.
 #' @description Temporary solution.
 #' @return \code{list_of<item_ptype>}.
 #' @export
@@ -79,11 +100,13 @@ vec_rips <- function(x, i) {
 
 #' @rdname vec_rips
 #' @export
-vec_rip <- function(x, i) {
+vec_rip <- function(x, i, strip_names = FALSE) {
     i <- vec_as_location(i, vec_size(x), vec_names(x))
     vec_assert(i, integer(), 1L)
 
     result <- vec_slice(x, i)
+    if (strip_names)
+        result <- set_names(result, NULL)
     if (is_bare_list(x) || is_list_of(x))
         result <- as_vec(result)
 

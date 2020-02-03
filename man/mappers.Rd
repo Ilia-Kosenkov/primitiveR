@@ -11,21 +11,21 @@
 \alias{vdiscard}
 \title{Mappers}
 \usage{
-vmap(.x, .f, ..., .fb_ptype = NULL)
+vmap(.x, .f, ..., .ptype = NULL)
 
-vmap_pt(.x, .f, ..., .fb_ptype = NULL)
+vmap_pt(.x, .f, ..., .ptype = NULL)
 
-vmap2(.x, .y, .f, ..., .fb_ptype = NULL)
+vmap2(.x, .y, .f, ..., .ptype = NULL)
 
-vmap2_pt(.x, .y, .f, ..., .fb_ptype = NULL)
+vmap2_pt(.x, .y, .f, ..., .ptype = NULL)
 
-vmap_if(.x, .p, .f, ..., .else = NULL, .fb_ptype = NULL)
+vmap_if(.x, .p, .f, ..., .else = NULL, .ptype = NULL)
 
-vmap_at(.x, .at, .f, ..., .fb_ptype = NULL)
+vmap_at(.x, .at, .f, ..., .ptype = NULL)
 
-vkeep(.x, .p, ..., .fb_ptype = NULL)
+vkeep(.x, .p, ..., .ptype = NULL)
 
-vdiscard(.x, .p, ..., .fb_ptype = NULL)
+vdiscard(.x, .p, ..., .ptype = NULL)
 }
 \arguments{
 \item{.x, .y}{Vectors to iterate over.}
@@ -34,7 +34,7 @@ vdiscard(.x, .p, ..., .fb_ptype = NULL)
 
 \item{...}{Additional paramters passed to mappers}
 
-\item{.fb_ptype}{Fallback \code{ptype} for type-stability of empty collections.}
+\item{.ptype}{Fallback \code{ptype} for type-stability of empty collections.}
 
 \item{.p}{Predicate function.}
 
