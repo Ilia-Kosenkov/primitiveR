@@ -1,3 +1,7 @@
 \.vs
 Implementation
 Debug
+.*\.tar\.gz
+.*\.sln
+.*Compile\.R
+.*[Rr]x?proj
