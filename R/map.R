@@ -20,14 +20,12 @@ vmap <- function(.x, .f, ..., .ptype = NULL) {
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
-    result <- as_list_of(map(
-        vec_rips(.x, vec_seq_along(.x)),
-        .f, ...))
+    result <- map(vec_rips(.x, vec_seq_along(.x)), .f, ...)
 
-    if (!is_null(.ptype))
-        result <- vec_cast(result, list_of(.ptype = .ptype))
+    # Temporary solution because *_common(!!!) does not work
+    .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(result)
+    return(vec_cast(result, list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -38,14 +36,9 @@ vmap_pt <- function(.x, .f, ..., .ptype = NULL) {
             abort("Input sequence is empty.", "primitiveR_invalid_arg")
         return(vec_init(vec_ptype(.ptype), 0L))
     }
-    result <- as_vec(map(
+    as_vec(map(
         vec_rips(.x, vec_seq_along(.x)),
-        .f, ...))
-
-    if (!is_null(.ptype))
-        result <- vec_cast(result, .ptype)
-
-    return(result)
+        .f, ...), .ptype = .ptype)
 }
 
 #' @rdname mappers
@@ -57,15 +50,15 @@ vmap2 <- function(.x, .y, .f, ..., .ptype = NULL) {
             abort("One of the input sequences is empty.", "primitiveR_invalid_arg")
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
-    result <- as_list_of(map2(
+    result <- map2(
          vec_rips(.x, vec_seq_along(.x)),
          vec_rips(.y, vec_seq_along(.y)),
-         .f, ...))
+         .f, ...)
 
-    if (!is_null(.ptype))
-        result <- vec_cast(result, list_of(.ptype = .ptype))
+    # Temporary solution because *_common(!!!) does not work
+    .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(result)
+    return(vec_cast(result, list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -77,14 +70,11 @@ vmap2_pt <- function(.x, .y, .f, ..., .ptype = NULL) {
             abort("One of the input sequences is empty.", "primitiveR_invalid_arg")
         return(vec_init(vec_ptype(.ptype), 0L))
     }
-    result <- as_vec(map2(
+
+    as_vec(map2(
          vec_rips(.x, vec_seq_along(.x)),
          vec_rips(.y, vec_seq_along(.y)),
-         .f, ...))
-    if (!is_null(.ptype))
-        result <- vec_cast(result, .ptype)
-
-    return(result)
+         .f, ...), .ptype = .ptype)
 }
 
 #' @rdname mappers
@@ -96,15 +86,15 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL, .ptype = NULL) {
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
-    result <- as_list_of(map_if(
+    result <- map_if(
         vec_rips(.x, vec_seq_along(.x)),
         vmap_pt(.x, .p, logical()),
-        .f, ..., .else = .else))
+        .f, ..., .else = .else)
 
-    if (!is_null(.ptype))
-        result <- vec_cast(result, list_of(.ptype = .ptype))
+    # Temporary solution because *_common(!!!) does not work
+    .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(result)
+    return(vec_cast(result, list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -124,16 +114,15 @@ vmap_at <- function(.x, .at, .f, ..., .ptype = NULL) {
 
     seq <- vec_rips(.x, vec_seq_along(.x))
     nms <- names(seq)
-    result <- as_list_of(
-        map_at(
+    result <- map_at(
             seq,
             vec_as_location(.at, vec_size(.x), nms),
-            .f, ...))
+            .f, ...)
 
-    if (!is_null(.ptype))
-        result <- vec_cast(result, list_of(.ptype = .ptype))
+    # Temporary solution because *_common(!!!) does not work
+    .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(result)
+    return(vec_cast(result, list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -144,6 +133,7 @@ vkeep <- function(.x, .p, ..., .ptype = NULL) {
     loc <- vec_as_location(sel, vec_size(.x))
     result <- vec_rips(.x, loc)
 
+    # `vec_rips` is type-stable
     if (!is_null(.ptype))
         result <- vec_cast(result, list_of(.ptype = .ptype))
 
@@ -158,6 +148,7 @@ vdiscard <- function(.x, .p, ..., .ptype = NULL) {
     loc <- vec_as_location(!sel, vec_size(.x))
     result <- vec_rips(.x, loc)
 
+    # `vec_rips` is type-stable
     if (!is_null(.ptype))
         result <- vec_cast(result, list_of(.ptype = .ptype))
 

@@ -10,7 +10,7 @@
 
 \method{as_list_of}{data.frame}(x, ..., .ptype = NULL)
 
-as_vec(x, ...)
+as_vec(x, ..., .ptype = NULL)
 }
 \arguments{
 \item{x}{Collection to convert.}

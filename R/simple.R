@@ -61,17 +61,18 @@ as_list_of.default <- function(x, ..., .ptype = NULL) {
 #' @return \code{list_of}/\code{vector} as a result of conversion.
 #' @export
 as_list_of.data.frame <- function(x, ..., .ptype = NULL) {
-    as_list_of(
+    vec_cast(
         set_names(
             map(vec_seq_along(x), vec_rip, x = x, strip_names = FALSE),
             vec_names(x)),
-        .ptype = .ptype)
+        to = list_of(.ptype = .ptype %||% vec_ptype(x)))
 }
 
 #' @rdname as_conv
 #' @export
-as_vec <- function(x, ...)
-    vec_c(!!!x)
+as_vec <- function(x, ..., .ptype = NULL)
+    # Temporary solution
+    vec_c(!!!x, .ptype = .ptype %||% vec_ptype(x[[1]]))
 
 #' @title Vector accessor
 #' @rdname vec_rips
@@ -90,7 +91,7 @@ vec_rips <- function(x, i) {
     if (is.data.frame(x)) {
         if (!is_null(nms))
             nms <- vec_slice(nms, i)
-        result <- as_list_of(set_names(vec_chop(x, as_list_of(i)), nms))
+        result <- vec_cast(set_names(vec_chop(x, as_list_of(i)), nms), to = list_of(.ptype = vec_ptype(x)))
     }
     else
         result <- as_list_of(vec_slice(x, i))
