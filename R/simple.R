@@ -5,11 +5,16 @@
 #' @export
 cc <- vec_c
 #' @title Vec_in
+#' @rdname vin
 #' @param needles Needles.
 #' @param haystack Haystack.
 #' @description A shortcut for \code{vctrs::vec_in}.
 #' @export
 `%vin%` <- vec_in
+#' @rdname vin
+#' @export
+`%!vin%` <- function(needles, haystack) !vec_in(needles, haystack)
+
 #' @title len
 #' @rdname len
 #' @param x Object to measure.

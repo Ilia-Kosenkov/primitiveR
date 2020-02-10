@@ -2,9 +2,12 @@
 % Please edit documentation in R/simple.R
 \name{\%vin\%}
 \alias{\%vin\%}
+\alias{\%!vin\%}
 \title{Vec_in}
 \usage{
 needles \%vin\% haystack
+
+needles \%!vin\% haystack
 }
 \arguments{
 \item{needles}{Needles.}
