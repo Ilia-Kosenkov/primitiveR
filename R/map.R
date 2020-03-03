@@ -155,10 +155,14 @@ vdiscard <- function(.x, .p, ..., .ptype = NULL) {
     return(result)
 }
 
+#' @rdname mappers
+#' @export
 vimap <- function(.x, .f, ..., .ptype = NULL) {
     vmap2(.x, vec_names(.x) %||% vec_seq_along(.x), .f, ..., .ptype = .ptype)
 }
 
+#' @rdname mappers
+#' @export
 vimap_pt <- function(.x, .f, ..., .ptype = NULL) {
     vmap2_pt(.x, vec_names(.x) %||% vec_seq_along(.x), .f, ..., .ptype = .ptype)
 }

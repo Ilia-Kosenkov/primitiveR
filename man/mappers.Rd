@@ -9,6 +9,8 @@
 \alias{vmap_at}
 \alias{vkeep}
 \alias{vdiscard}
+\alias{vimap}
+\alias{vimap_pt}
 \title{Mappers}
 \usage{
 vmap(.x, .f, ..., .ptype = NULL)
@@ -26,6 +28,10 @@ vmap_at(.x, .at, .f, ..., .ptype = NULL)
 vkeep(.x, .p, ..., .ptype = NULL)
 
 vdiscard(.x, .p, ..., .ptype = NULL)
+
+vimap(.x, .f, ..., .ptype = NULL)
+
+vimap_pt(.x, .f, ..., .ptype = NULL)
 }
 \arguments{
 \item{.x, .y}{Vectors to iterate over.}
