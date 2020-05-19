@@ -1,6 +1,6 @@
 Package: primitiveR
 Title: R primitive tools
-Version: 0.0.19
+Version: 0.0.20
 Authors@R: 
     person(given = "Ilia",
            family = "Kosenkov",
@@ -23,4 +23,4 @@ Imports:
 Suggests:
     testthat,
 	magrittr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

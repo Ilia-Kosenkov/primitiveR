@@ -10,10 +10,10 @@ cc <- vec_c
 #' @param haystack Haystack.
 #' @description A shortcut for \code{vctrs::vec_in}.
 #' @export
-`%vin%` <- function(needles, haystack) vec_in(needles, haystack)
+`%vin%` <- function(needles, haystack) vec_in(needles = needles, haystack = heystack)
 #' @rdname vin
 #' @export
-`%!vin%` <- function(needles, haystack) !vec_in(needles, haystack)
+`%!vin%` <- function(needles, haystack) !vec_in(needles = needles, haystack = heystack)
 
 #' @title len
 #' @rdname len
