@@ -13,7 +13,7 @@ cc <- vec_c
 `%vin%` <- function(needles, haystack) vec_in(needles = needles, haystack = haystack)
 #' @rdname vin
 #' @export
-`%!vin%` <- function(needles, haystack) !vec_in(needles = needles, haystack = heystack)
+`%!vin%` <- function(needles, haystack) !vec_in(needles = needles, haystack = haystack)
 
 #' @title len
 #' @rdname len
