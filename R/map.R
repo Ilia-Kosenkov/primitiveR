@@ -88,7 +88,7 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL, .ptype = NULL) {
 
     result <- map_if(
         vec_rips(.x, vec_seq_along(.x)),
-        vmap_pt(.x, .p, logical()),
+        vmap_pt(.x, .p, .ptype = logical()),
         .f, ..., .else = .else)
 
     # Temporary solution because *_common(!!!) does not work
@@ -129,7 +129,7 @@ vmap_at <- function(.x, .at, .f, ..., .ptype = NULL) {
 #' @export
 vkeep <- function(.x, .p, ..., .ptype = NULL) {
     .p <- as_mapper(.p, ...)
-    sel <- vmap_pt(.x, .p, logical())
+    sel <- vmap_pt(.x, .p, .ptype = logical())
     loc <- vec_as_location(sel, vec_size(.x))
     result <- vec_rips(.x, loc)
 
@@ -144,7 +144,7 @@ vkeep <- function(.x, .p, ..., .ptype = NULL) {
 #' @export
 vdiscard <- function(.x, .p, ..., .ptype = NULL) {
     .p <- as_mapper(.p, ...)
-    sel <- vmap_pt(.x, .p, logical())
+    sel <- vmap_pt(.x, .p, .ptype = logical())
     loc <- vec_as_location(!sel, vec_size(.x))
     result <- vec_rips(.x, loc)
 

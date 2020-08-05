@@ -25,6 +25,14 @@ test_that("`map_if` vs `vmap_if`", {
     expect_true(as_list_of(map_if(x, ~ .x > 0, ~ .x ^ 2)) %===% vmap_if(x, ~ .x > 0, ~ .x ^ 2))
 })
 
+test_that("`map_if` vs `vmap_if` with anonymous function", {
+    set.seed(1)
+
+    x <- rnorm(1000)
+
+    expect_true(as_list_of(map_if(x, ~ .x > 0, ~ .x ^ 2)) %===% vmap_if(x, function(x) x > 0, ~ .x ^ 2))
+})
+
 test_that("`map_at` vs `vmap_at`", {
     set.seed(1)
 
