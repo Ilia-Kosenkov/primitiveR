@@ -3,6 +3,7 @@ if (interactive()) {
     library(purrr)
     library(rlang)
     library(vctrs)
+    library(Rcpp)
     if (!exists("compile_src"))
         compile_src <<- function() {
             `%>%` <- dplyr::`%>%`

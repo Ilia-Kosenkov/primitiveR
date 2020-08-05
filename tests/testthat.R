@@ -3,7 +3,7 @@ if (interactive()) {
     is_null <- rlang::is_null
     test_dir(file.path("tests", "testthat"))
 
-}else{
+} else {
     library(purrr)
     library(testthat)
     library(primitiveR)

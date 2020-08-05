@@ -67,9 +67,9 @@ as_list_of.default <- function(x, ..., .ptype = NULL) {
 #' @export
 as_list_of.data.frame <- function(x, ..., .ptype = NULL) {
     vec_cast(
-        set_names(
+        as_list_of(set_names(
             map(vec_seq_along(x), vec_rip, x = x, strip_names = FALSE),
-            vec_names(x)),
+            vec_names(x))),
         to = list_of(.ptype = .ptype %||% vec_ptype(x)))
 }
 
@@ -96,7 +96,7 @@ vec_rips <- function(x, i) {
     if (is.data.frame(x)) {
         if (!is_null(nms))
             nms <- vec_slice(nms, i)
-        result <- vec_cast(set_names(vec_chop(x, as_list_of(i)), nms), to = list_of(.ptype = vec_ptype(x)))
+        result <- vec_cast(as_list_of(set_names(vec_chop(x, as_list_of(i)), nms)), to = list_of(.ptype = vec_ptype(x)))
     }
     else
         result <- as_list_of(vec_slice(x, i))

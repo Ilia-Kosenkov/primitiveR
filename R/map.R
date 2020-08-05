@@ -25,7 +25,7 @@ vmap <- function(.x, .f, ..., .ptype = NULL) {
     # Temporary solution because *_common(!!!) does not work
     .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(vec_cast(result, list_of(.ptype = .ptype)))
+    return(vec_cast(as_list_of(result), list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -58,7 +58,7 @@ vmap2 <- function(.x, .y, .f, ..., .ptype = NULL) {
     # Temporary solution because *_common(!!!) does not work
     .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(vec_cast(result, list_of(.ptype = .ptype)))
+    return(vec_cast(as_list_of(result), list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -94,7 +94,7 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL, .ptype = NULL) {
     # Temporary solution because *_common(!!!) does not work
     .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(vec_cast(result, list_of(.ptype = .ptype)))
+    return(vec_cast(as_list_of(result), list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -103,7 +103,7 @@ vmap_at <- function(.x, .at, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.at)) {
         if (is_null(.ptype))
             abort("Position sequence is empty.", "primitiveR_invalid_arg")
-        return(list_of(!!!.x, .ptype = vec_ptype(.ptype)))
+        return(vec_cast(as_list_of(.x), list_of(.ptype = vec_ptype(.ptype))))
     }
 
     if (vec_is_empty(.x)) {
@@ -122,7 +122,7 @@ vmap_at <- function(.x, .at, .f, ..., .ptype = NULL) {
     # Temporary solution because *_common(!!!) does not work
     .ptype <- .ptype %||% vec_ptype(result[[1]])
 
-    return(vec_cast(result, list_of(.ptype = .ptype)))
+    return(vec_cast(as_list_of(result), list_of(.ptype = .ptype)))
 }
 
 #' @rdname mappers
@@ -135,7 +135,7 @@ vkeep <- function(.x, .p, ..., .ptype = NULL) {
 
     # `vec_rips` is type-stable
     if (!is_null(.ptype))
-        result <- vec_cast(result, list_of(.ptype = .ptype))
+        result <- vec_cast(as_list_of(result), list_of(.ptype = .ptype))
 
     return(result)
 }
@@ -150,7 +150,7 @@ vdiscard <- function(.x, .p, ..., .ptype = NULL) {
 
     # `vec_rips` is type-stable
     if (!is_null(.ptype))
-        result <- vec_cast(result, list_of(.ptype = .ptype))
+        result <- vec_cast(as_list_of(result), list_of(.ptype = .ptype))
 
     return(result)
 }

@@ -1,6 +1,6 @@
 Package: primitiveR
 Title: R primitive tools
-Version: 0.0.21
+Version: 0.0.22
 Authors@R: 
     person(given = "Ilia",
            family = "Kosenkov",
@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: MIT + file LICENSE
-URL: https://github.com/Ilia-Kosenkov/RLibs
+URL: https://github.com/Ilia-Kosenkov/primitiveR
 LinkingTo: Rcpp
 Imports:
     Rcpp,
@@ -23,4 +23,4 @@ Imports:
 Suggests:
     testthat,
 	magrittr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

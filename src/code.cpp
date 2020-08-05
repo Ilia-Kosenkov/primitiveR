@@ -1,6 +1,7 @@
 #include "imports.h"
 using namespace Rcpp;
 
+// [[Rcpp::export]]
 SEXP primR_are_equal_f(SEXP x, SEXP y, SEXP eps) {
 	const auto x_vals = as<std::vector<double>>(x);
 	const auto y_vals = as<std::vector<double>>(y);
