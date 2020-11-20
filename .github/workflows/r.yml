@@ -30,7 +30,7 @@ jobs:
           r-version: 4.0.3
       - name: Install dependencies
         run: |
-          Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2'))
+          Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2'))"
                   
       - name: Build & Check
         run: |
