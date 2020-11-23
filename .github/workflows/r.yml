@@ -28,6 +28,8 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: 4.0.3
+      - name: Install TeX
+        run: sudo apt-get install texlive-latex-base
       - name: Install dependencies
         run: |
           Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2', 'testthat', 'Rcpp', 'glue'))"
