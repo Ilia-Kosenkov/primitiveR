@@ -34,7 +34,7 @@ jobs:
                   
       - name: Build metadata
         run: |
-          Rcript -e "Rcpp::compileAttributes(); roxygen2::roxygenize()"
+          Rscript -e "Rcpp::compileAttributes(); roxygen2::roxygenize()"
         
       - name: Build & Check package
         run: |
