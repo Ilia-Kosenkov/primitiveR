@@ -27,5 +27,5 @@ LogicalVector primR_are_equal_f(NumericVector x, NumericVector y, double eps) {
 		}
 	}
 
-	return wrap(result);
+	return result;
 }
