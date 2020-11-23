@@ -41,4 +41,4 @@ vignettes/*.pdf
 *.dll
 **/Implementation/*
 
-**/RcppExport*
+#**/RcppExport*
