@@ -30,10 +30,18 @@ jobs:
           r-version: 4.0.3
       - name: Install dependencies
         run: |
-          Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2'))"
+          Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2', 'testthat', 'Rcpp', 'glue'))"
                   
-      - name: Build & Check
+      - name: Build metadata
         run: |
-          Rscript compile.R
+          Rcript -e "Rcpp::compileAttributes(); roxygen2::roxygenize()"
         
+      - name: Build & Check package
+        run: |
+          R CMD build . && R CMD check ./primitiveR*gz
+        
+      - uses: actions/upload-artifact@v2.2.1
+        with: 
+          name: Package
+          path: ./primitiveR*gz
         
