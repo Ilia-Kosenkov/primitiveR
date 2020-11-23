@@ -1,6 +1,6 @@
 Package: primitiveR
 Title: R primitive tools
-Version: 0.0.23
+Version: 0.1.0
 Authors@R: 
     person(given = "Ilia",
            family = "Kosenkov",
@@ -16,9 +16,9 @@ URL: https://github.com/Ilia-Kosenkov/primitiveR
 LinkingTo: Rcpp
 Imports:
     Rcpp,
-	rlang (>= 0.4.5),
-	vctrs (>= 0.2.99),
-	purrr,
+	rlang (>= 0.4.7),
+	vctrs (>= 0.3.2),
+	purrr (>= 0.3.4),
 	glue
 Suggests:
     testthat,
