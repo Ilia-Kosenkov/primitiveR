@@ -10,7 +10,7 @@ are_equal_f <- function(x, y, eps = 1) {
     vec_cast(eps, double()) -> eps
     vec_recycle_common(vec_cast(x, double()), vec_cast(y, double())) -> tmp
 
-    are_equal_f_(tmp[[1]], tmp[[2]], .Machine$double.eps * eps)
+    primR_are_equal_f(tmp[[1]], tmp[[2]], .Machine$double.eps * eps)
 }
 
 
@@ -59,8 +59,3 @@ are_equal_f <- function(x, y, eps = 1) {
 #' @rdname equality
 #' @export
 `%!==%` <- function(x, y) any(x %!=% y)
-
-
-are_equal_f_ <- function(x, y, eps) {
-    .Call("primR_are_equal_f", x, y, eps)
-}

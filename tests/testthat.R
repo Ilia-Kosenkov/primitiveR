@@ -1,13 +1,4 @@
-if (interactive()) {
-    library(testthat)
-    is_null <- rlang::is_null
-    test_dir(file.path("tests", "testthat"))
+library(testthat)
+library(primitiveR)
 
-} else {
-    library(purrr)
-    library(testthat)
-    library(primitiveR)
-    # Needed for testthat
-    library(Rcpp)
-    test_check("primitiveR")
-}
+test_check("primitiveR")
