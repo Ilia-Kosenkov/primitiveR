@@ -29,7 +29,8 @@ jobs:
         with:
           r-version: 4.0.3
       - name: Install TeX
-        run: sudo apt-get install texlive-latex-base && sudo apt-get install texlive-fonts-recommended
+        # Expermental, probably takes a lot of space
+        run: sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra -y
       - name: Install dependencies
         run: |
           Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2', 'testthat', 'Rcpp', 'glue'))"
