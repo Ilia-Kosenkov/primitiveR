@@ -21,14 +21,23 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    
+
+    name: ${{ matrix.os }}
+            
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['Windows-latest', 'ubuntu-latest', 'macOS-latest']
+
+    runs-on: ${{ matrix.os }}
     
     steps:
       - uses: actions/checkout@v2
       - name: Set up R 4.0
         uses: r-lib/actions/setup-r@v1
         with:
-          r-version: 4.0.3
+          r-version: release
       
       - name: Set up Pandoc
         uses: r-lib/actions/setup-pandoc@v1
@@ -63,12 +72,16 @@ jobs:
         shell: Rscript {0}
         
       - name: Build & Check package
+        id: integration_tests
         run: |
           rcmdcheck::rcmdcheck(path = ".", args = c("--no-manual"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
         
-      - uses: actions/upload-artifact@v2.2.1
-        with: 
-          name: Package
-          path: ./primitiveR*gz
+      - name: Upload check results from R integration tests
+        if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name:  ${{ matrix.config.os }}
+          path: check
+
         
