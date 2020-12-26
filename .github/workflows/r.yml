@@ -17,6 +17,7 @@ on:
     branches: [ master ]
     tags-ignore: 
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -33,15 +34,21 @@ jobs:
         run: sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra -y
       - name: Install dependencies
         run: |
-          Rscript -e "install.packages(c('rlang', 'vctrs', 'purrr', 'roxygen2', 'testthat', 'Rcpp', 'glue'))"
+          install.packages("remotes")  
+          remotes::install_deps(pkgdir = ".", dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
                   
       - name: Build metadata
         run: |
-          Rscript -e "Rcpp::compileAttributes(); roxygen2::roxygenize()"
+          Rcpp::compileAttributes()
+          roxygen2::roxygenize()
+        shell: Rscript {0}
         
       - name: Build & Check package
         run: |
-          R CMD build . && R CMD check ./primitiveR*gz
+          rcmdcheck::rcmdcheck(path = ".", args = c("--no-manual"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
         
       - uses: actions/upload-artifact@v2.2.1
         with: 
