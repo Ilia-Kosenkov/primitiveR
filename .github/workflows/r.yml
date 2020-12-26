@@ -36,8 +36,9 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages("remotes")  
-          remotes::install_deps(pkgdir = ".", dependencies = TRUE)
+          remotes::install_deps(pkgdir = ".", dependencies = NA)
           remotes::install_cran("rcmdcheck")
+          remotes::install_cran("roxygen2")
         shell: Rscript {0}
                   
       - name: Build metadata
