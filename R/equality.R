@@ -37,15 +37,15 @@ are_equal_f <- function(x, y, eps = 1) {
 `%==%.default` <- function(x, y) UseMethod("%==%.default", y)
 
 #' @rdname equality
-#' @method %==%.default default
+#' @method \%==\%.default default
 #' @export
 `%==%.default.default` <- function(x, y) (vec_equal(x, y)) %|% FALSE
 #' @rdname equality
-#' @method %==%.default double
+#' @method \%==\%.default double
 #' @export
 `%==%.default.double` <- function(x, y) (are_equal_f(x, y)) %|% FALSE
 #' @rdname equality
-#' @method %==%.default name
+#' @method \%==\%.default name
 #' @export
 `%==%.default.name` <- function(x, y) (is_symbol(x) & x == y) %|% FALSE
 
