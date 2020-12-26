@@ -13,19 +13,19 @@
 \alias{\%!==\%}
 \title{Equality operators}
 \usage{
-x \%==\% y
+`x \%==\% y`
 
-\method{\%==\%}{double}(x, y)
+`(0.1 + 0.2) \%==\% (0.3)`
 
-\method{\%==\%}{name}(x, y)
+`name_1 \%==\% name_2`
 
-\method{\%==\%}{default}(x, y)
+`1.0 \%==\% y`
 
-\method{\%==\%.default}{default}(x, y)
+`1 \%==\% "1"`
 
-\method{\%==\%.default}{double}(x, y)
+`"1" \%==\% 1.0`
 
-\method{\%==\%.default}{name}(x, y)
+`"x" \%==\% x`
 
 x \%!=\% y
 

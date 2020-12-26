@@ -22,30 +22,37 @@ are_equal_f <- function(x, y, eps = 1) {
 #' @param y Rhs.
 #'
 #' @return Either a logical vector of the same as input size, or a single logical value.
+#' @usage `x \%==\% y`
 #' @export
 `%==%` <- function(x, y) UseMethod("%==%")
 
 #' @rdname equality
+#' @usage `(0.1 + 0.2) \%==\% (0.3)`
 #' @export
 `%==%.double` <- function(x, y) (are_equal_f(x, y)) %|% FALSE
 #' @rdname equality
+#' @usage `name_1 \%==\% name_2`
 #' @export
 `%==%.name` <- function(x, y) (is_symbol(y) & x == y) %|% FALSE
 #' @rdname equality
 #' @method %==% default
+#' @usage `1.0 \%==\% y`
 #' @export
 `%==%.default` <- function(x, y) UseMethod("%==%.default", y)
 
 #' @rdname equality
-#' @method \%==\%.default default
+#' @method %==%.default default
+#' @usage `1 \%==\% "1"`
 #' @export
 `%==%.default.default` <- function(x, y) (vec_equal(x, y)) %|% FALSE
 #' @rdname equality
-#' @method \%==\%.default double
+#' @method %==%.default double
+#' @usage `"1" \%==\% 1.0`
 #' @export
 `%==%.default.double` <- function(x, y) (are_equal_f(x, y)) %|% FALSE
 #' @rdname equality
-#' @method \%==\%.default name
+#' @method %==%.default name
+#' @usage `"x" \%==\% x`
 #' @export
 `%==%.default.name` <- function(x, y) (is_symbol(x) & x == y) %|% FALSE
 
