@@ -1,0 +1,70 @@
+---
+title:
+  primitiveR readme
+output: 
+  github_document:
+    html_preview: false
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+# primitiveR
+
+
+## Installation
+
+
+Development version can be installed from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Ilia-Kosenkov/primitiveR")
+```
+## Example \#1
+
+```{r}
+library(purrr)
+library(vctrs)
+library(primitiveR)
+```
+`primitiveR` allows for type-preserving and structure-preserving mappings (at least while `purrr` does not fully support it).
+
+```{r}
+mtcars[1:5,1:3] %>% map(~.x)
+mtcars[1:5,1:3] %>% vmap(~.x)
+```
+
+The `*map_pt` version has an optional `.ptype` argument that can be used to select the output type. By default, it will result into the following:
+```{r}
+mtcars[1:3,1:3] %>% vmap(~.x) -> x
+x
+x %>% vmap_pt(~.x)
+```
+
+```{r}
+1:10 %>% vmap_if(~.x > 5, ~1L, .else = ~0L) %>% as_vec
+```
+
+## Example \#2
+`primitiveR` provides floating-point equality extension using `%==%` and `%!=%`, which operate as normal `==` and `!=` for vector types.
+
+```{r}
+0.1 + 0.2 == 0.3
+(0.1 + 0.2) %==% 0.3
+```
+`%===%` and `%!==%` are particular useful in conditions, because these operators apply `all`/`any` to the output of `%==%` or `%!=%`.
+
+```{r}
+(1:5) %!=% 1
+(1:5) %!==% 1
+(1:5) %==% (1:5)
+(1:5) %===% (1:5)
+```
