@@ -21,6 +21,6 @@ Imports:
 	purrr (>= 0.3.4),
 	glue
 Suggests:
-    testthat,
+  testthat,
 	magrittr
 RoxygenNote: 7.1.1
