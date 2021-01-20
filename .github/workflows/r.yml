@@ -43,7 +43,7 @@ jobs:
         run: |
           install.packages("remotes")
           remotes::install_deps(pkgdir = ".", dependencies = NA)
-          remotes::install_cran("rcmdcheck")
+          remotes::install_cran(c("rcmdcheck", "testthat", "magrittr"))
         shell: Rscript {0}
         
       - name: Build & Check package
@@ -56,7 +56,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@main
         with:
-          name:  ${{ matrix.config.os }}
+          name:  ${{ matrix.os }}
           path: check
 
         
