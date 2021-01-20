@@ -1,11 +1,11 @@
 Package: primitiveR
 Title: R primitive tools
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person(given = "Ilia",
            family = "Kosenkov",
            role = c("aut", "cre"),
-           email = "ilia.kosenkov.at.gm@gmail.com",
+           email = "ilia.kosenkov@outlook.com",
            comment = c())
 Description: None.
 Encoding: UTF-8
@@ -13,7 +13,8 @@ LazyData: true
 ByteCompile: true
 License: MIT + file LICENSE
 URL: https://github.com/Ilia-Kosenkov/primitiveR
-LinkingTo: Rcpp
+LinkingTo: cpp11
+SystemRequirements: C++11
 Imports:
     Rcpp,
 	rlang (>= 0.4.7),
