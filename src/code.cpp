@@ -1,12 +1,12 @@
-#include <Rcpp.h>
+#include <cpp11.hpp>
 #include <cmath>
-using namespace Rcpp;
+using namespace cpp11;
 
-// [[Rcpp::export]]
-LogicalVector primR_are_equal_f(NumericVector x, NumericVector y, double eps) {
+// [[cpp11::register]]
+logicals primR_are_equal_f(doubles x, doubles y, double eps) {
 
 	const size_t len = x.length();
-	LogicalVector result(len);
+	writables::logicals result(len);
 	
 	for (size_t i = 0; i < len; i++) {
 		if (std::isnan(x[i]) || std::isnan(y[i]))
