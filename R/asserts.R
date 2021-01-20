@@ -16,11 +16,7 @@ assert <- function(expr, msg = NULL, subclass = NULL) {
                 msg <- paste0("Assertion `", quo_text(q), "` has failed")
             }
             else
-                msg <- paste0(
-                    "Assertion `",
-                    quo_text(q),
-                    "` has failed: ",
-                    paste(msg, collapse = "; "))
+                msg <- paste(msg, collapse = "; ")
         }
         else
             msg <- paste0("Assertion `", quo_text(q), "` has failed")

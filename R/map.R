@@ -47,7 +47,7 @@ vmap2 <- function(.x, .y, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.x) || vec_is_empty(.y)) {
         if (is_null(.ptype))
             abort(
-                glue_fmt("One of the input sequences is empty.\n X `.x` has length {vec_size(.x)}.\n X `.y` has length {vec_size(.y)}."), 
+                glue_fmt_chr("One of the input sequences is empty.\n X `.x` has length {vec_size(.x)}.\n X `.y` has length {vec_size(.y)}."), 
                 "primitiveR_invalid_arg")
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
@@ -69,7 +69,7 @@ vmap2_pt <- function(.x, .y, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.x) || vec_is_empty(.y)) {
         if (is_null(.ptype))
             abort(
-                glue_fmt("One of the input sequences is empty.\n X `.x` has length {vec_size(.x)}.\n X `.y` has length {vec_size(.y)}."), 
+                glue_fmt_chr("One of the input sequences is empty.\n X `.x` has length {vec_size(.x)}.\n X `.y` has length {vec_size(.y)}."), 
                 "primitiveR_invalid_arg")
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
