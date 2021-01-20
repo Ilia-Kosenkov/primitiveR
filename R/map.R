@@ -33,7 +33,7 @@ vmap <- function(.x, .f, ..., .ptype = NULL) {
 vmap_pt <- function(.x, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.x)) {
         if (is_null(.ptype))
-            abort("Input sequence is empty.", "primitiveR_invalid_arg")
+            abort("Invalid input.\n X `.x` is empty.\n X `.ptype` is `NULL`.", "primitiveR_invalid_arg")
         return(vec_init(vec_ptype(.ptype), 0L))
     }
     as_vec(map(
@@ -44,12 +44,14 @@ vmap_pt <- function(.x, .f, ..., .ptype = NULL) {
 #' @rdname mappers
 #' @export
 vmap2 <- function(.x, .y, .f, ..., .ptype = NULL) {
-    vec_recycle_common(.x, .y) %->% c(.x, .y)
-    if (vec_is_empty(.x)) {
+    if (vec_is_empty(.x) || vec_is_empty(.y)) {
         if (is_null(.ptype))
-            abort("One of the input sequences is empty.", "primitiveR_invalid_arg")
+            abort(
+                glue_fmt_chr("One of the input sequences is empty.\n X `.x` has length {vec_size(.x)}.\n X `.y` has length {vec_size(.y)}."), 
+                "primitiveR_invalid_arg")
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
+    vec_recycle_common(.x, .y) %->% c(.x, .y)
     result <- map2(
          vec_rips(.x, vec_seq_along(.x)),
          vec_rips(.y, vec_seq_along(.y)),
@@ -64,13 +66,14 @@ vmap2 <- function(.x, .y, .f, ..., .ptype = NULL) {
 #' @rdname mappers
 #' @export
 vmap2_pt <- function(.x, .y, .f, ..., .ptype = NULL) {
-    vec_recycle_common(.x, .y) %->% c(.x, .y)
-    if (vec_is_empty(.x)) {
+    if (vec_is_empty(.x) || vec_is_empty(.y)) {
         if (is_null(.ptype))
-            abort("One of the input sequences is empty.", "primitiveR_invalid_arg")
-        return(vec_init(vec_ptype(.ptype), 0L))
+            abort(
+                glue_fmt_chr("One of the input sequences is empty.\n X `.x` has length {vec_size(.x)}.\n X `.y` has length {vec_size(.y)}."), 
+                "primitiveR_invalid_arg")
+        return(list_of(.ptype = vec_ptype(.ptype)))
     }
-
+    vec_recycle_common(.x, .y) %->% c(.x, .y)
     as_vec(map2(
          vec_rips(.x, vec_seq_along(.x)),
          vec_rips(.y, vec_seq_along(.y)),
@@ -82,7 +85,7 @@ vmap2_pt <- function(.x, .y, .f, ..., .ptype = NULL) {
 vmap_if <- function(.x, .p, .f, ..., .else = NULL, .ptype = NULL) {
     if (vec_is_empty(.x)) {
         if (is_null(.ptype))
-            abort("Input sequence is empty.", "primitiveR_invalid_arg")
+            abort("Invalid input.\n X `.x` is empty.\n X `.ptype` is `NULL`.", "primitiveR_invalid_arg")
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
@@ -102,13 +105,13 @@ vmap_if <- function(.x, .p, .f, ..., .else = NULL, .ptype = NULL) {
 vmap_at <- function(.x, .at, .f, ..., .ptype = NULL) {
     if (vec_is_empty(.at)) {
         if (is_null(.ptype))
-            abort("Position sequence is empty.", "primitiveR_invalid_arg")
+            abort("Invalid input.\n X `.at` is empty.\n X `.ptype` is `NULL`.", "primitiveR_invalid_arg")
         return(vec_cast(as_list_of(.x), list_of(.ptype = vec_ptype(.ptype))))
     }
 
     if (vec_is_empty(.x)) {
         if (is_null(.ptype))
-            abort("Input sequence is empty.", "primitiveR_invalid_arg")
+            abort("Invalid input.\n X `.x` is empty.\n X `.ptype` is `NULL`.", "primitiveR_invalid_arg")
         return(list_of(.ptype = vec_ptype(.ptype)))
     }
 
