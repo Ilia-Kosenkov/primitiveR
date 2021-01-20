@@ -7,3 +7,5 @@ Debug
 .*Compile\.R
 .*[Rr]x?proj
 ^README\.Rmd$
+^.*\.Rproj$
+^\.Rproj\.user$
