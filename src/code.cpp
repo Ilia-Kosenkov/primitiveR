@@ -2,11 +2,11 @@
 #include <cmath>
 using namespace cpp11;
 
-// [[cpp11::register]]
+[[cpp11::register]]
 logicals primR_are_equal_f(doubles x, doubles y, double eps) {
 
-	const size_t len = x.length();
-	writables::logicals result(len);
+	const size_t len = x.size();
+	writable::logicals result(len);
 	
 	for (size_t i = 0; i < len; i++) {
 		if (std::isnan(x[i]) || std::isnan(y[i]))
