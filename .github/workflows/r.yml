@@ -54,9 +54,6 @@ jobs:
         run: |
           remotes::install_deps(pkgdir = ".", dependencies = NA)
           remotes::install_cran("rcmdcheck")
-          remotes::install_cran("roxygen2")
-          remotes::install_cran("testthat")
-          remotes::install_cran("decor")
         shell: Rscript {0}
         
       - name: Cache installed R packages
@@ -65,17 +62,11 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/packages.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-      
-                  
-      - name: Build metadata
-        run: |
-          roxygen2::roxygenize()
-        shell: Rscript {0}
-        
+  
       - name: Build & Check package
         id: integration_tests
         run: |
-          rcmdcheck::rcmdcheck(path = ".", args = c("--no-manual"), error_on = "warning", check_dir = "check")
+          rcmdcheck::rcmdcheck(path = ".", args = c("--no-manual", "--force-multiarch"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
         
       - name: Upload check results from R integration tests
